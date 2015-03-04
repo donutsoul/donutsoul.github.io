@@ -1,0 +1,64 @@
+---
+layout: post
+title:  "mongo db"
+date:   2015-03-05 00:55:27
+categories: mongodb
+---
+#mongo db
+
+*서버 실행*
+
+	1. cmd 로 몽고설치폴더/bin 으로 이동한다.
+	2. mongod --dbapth "DB를 저장할 폴더 경로" 하면 끗. - 계정권한없이 그냥 실행됨
+
+	<서버 실행 옵션>
+	DB 폴더지정 --dbapth "경로"
+	log 파일 지정 --logpath "경로" --logappend
+	커넥션제한 -maxConns 100
+	계정보안옵션 --auth
+
+*서버 접속*
+
+	1. cmd 를 새로 띄우고 몽고설치폴더/bin 으로 이동한다.
+	2. mongo 하면 끗 - 그냥 접속됨
+	
+	<서버 접속 옵션>
+	유저정보 -u "유저아이디" -p "패스워드
+	접속db : 맨마지막에 한칸띄고 db명을 입력
+
+
+*기본적인 명령어*
+
+	use dbname;	//db 이동 , 없으면 db 생성됨
+
+	db;	//현재 접속한 db 이름을 반환
+
+	db.createCollection("collectionName");	//컬렉션(테이블) 생성
+
+	show collections;	//컬렉션 목록
+
+	db.collectionName.insert({ id:"coolmsd", name:"msd" });	//insert()와 save()동일 동작
+
+	db.collectionName.find();	//select * from collectionName;
+
+	db.collectionName.find().explan();	//select * from collectionName; -> 실행시간포함 출력
+
+	db.collectionName.find({id:"coolmsd"});	//select * from collectionName where id="coolmsd"
+
+	db.collectionName.count();	//전체 row 카운트
+
+	db.collectionName.ensureIndex({"id" : 1});	//인덱스 생성 // 1:오름차순, -1:내림차순
+
+	db.collectionName.getIndexes();	//인덱스 조회
+
+	db.collectionName.dropIndex({"id" : 1});	//인덱스 삭제
+
+	db.collectionName.find({id:"coolmsd"}).hint({"id" : 1});	//인덱스 사용하여(hint) 조회
+
+	db.collectionName.find().sort( { user_id: 1 } );	//order by user_id 오름차순
+
+	db.collectionName.find().limit(5).skip(10);	//10개 skip(11번째부터) 5개만 조회
+
+	db.collectionName.remove(); //delete from collectionName;
+
+	db.collectionName.remove( {id:"coolmsd"} );	//delete from collectionName where id="coolmsd"
